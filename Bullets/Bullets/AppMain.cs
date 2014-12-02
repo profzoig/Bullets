@@ -20,13 +20,14 @@ namespace Bullets
 		
 		private static Obstacle[]	obstacles;
 		public static Player 		player;
+		public static Enemy 		enemy;
 		private static Background 	background;
 		//Possible future implementation
 		//private static Powerup 		powerup;
 		
 		public static void Main (string[] args)
 		{
-			Initialize ();
+			Initialize();
 			
 			//Game Loop
 			bool quitGame = false;
@@ -65,21 +66,29 @@ namespace Bullets
 	
 			player = new Player(gameScene);
 			
+			enemy = new Enemy(gameScene);
+			
 			//Run the scene.
 			Director.Instance.RunWithScene(gameScene, true);
 		}
 
-		public static void Update ()
+		public static void Update()
 		{	
 			//Determine whether the player tapped the screen
 			var touches = Touch.GetData(0);
 			
 			//If tapped, inform the player.
 			if(touches.Count > 0)
-				player.position = new Vector2(touches[0].X,touches[0].Y);
+			{
+				float newX = (touches[0].X+0.5f)*960-5;
+				float newY = 544-(touches[0].Y+0.5f)*544-10;
+				
+				player.sprite.Position = new Vector2(newX,newY);
+			}
 			
 			//Update the player.
 			Player.Update();
+			Enemy.Update();
 		}
 	}
 }

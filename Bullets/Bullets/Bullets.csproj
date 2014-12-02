@@ -43,6 +43,7 @@
     <Compile Include="Player.cs" />
     <Compile Include="Obstacle.cs" />
     <Compile Include="Background.cs" />
+    <Compile Include="Enemy.cs" />
   </ItemGroup>
   <ItemGroup>
     <ShaderProgram Include="shaders\Simple.fcg" />
@@ -58,5 +59,6 @@
   <ItemGroup>
     <Content Include="textures\player.png" />
     <Content Include="textures\background.png" />
+    <Content Include="textures\enemy.png" />
   </ItemGroup>
 </Project>

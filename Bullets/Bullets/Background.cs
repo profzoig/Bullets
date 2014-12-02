@@ -11,7 +11,7 @@ namespace Bullets
 	public class Background
 	{	
 		//Private variables.
-		private SpriteUV[] 	sprites;
+		private static SpriteUV[] 	sprites;
 		private TextureInfo	textureInfo;
 		private float		width;
 		
