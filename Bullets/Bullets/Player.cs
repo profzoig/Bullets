@@ -37,18 +37,7 @@ namespace Bullets
 		
 		public static void Update()
 		{
-			//Determine whether the player tapped the screen
-			var touches = Touch.GetData(0);
 			
-			//If tapped, inform the player.
-			if(touches.Count > 0)
-			{
-				float newX = (touches[0].X+0.5f)*960-5;
-				float newY = 544-(touches[0].Y+0.5f)*544-10;
-				
-				sprite.Position = new Vector2(newX,newY);
-				
-			}
 			
 		}
 	}
