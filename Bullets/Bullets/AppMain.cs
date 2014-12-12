@@ -28,7 +28,7 @@ namespace Bullets
 		public static int score;
 		public static int level; 
 		public static int levelEnemyAmount;
-		
+		public static bool gamePause;
 		//Game states which make up the game engine
 		private const int GAME_STATE_TITLE = 10;
 		private const int  GAME_STATE_MENU = 20;
@@ -48,16 +48,42 @@ namespace Bullets
 			Initialize ();
 			//Switch the game state to title
 			switchGameState(GAME_STATE_NEW_GAME);
-			
+			gamePause = false;
 			//Game Loop
 			bool quitGame = false;
 			while (!quitGame) {		
 				Director.Instance.Update ();
-				runGame();
+				if(gamePause == false){
+					var buttons = GamePad.GetData (0);
+						
+					//DEBUGGING PURPOSES			
+					if (buttons.Buttons != 0) {
+						if ((buttons.Buttons & GamePadButtons.Start) != 0) 
+						{
+							gamePause = true;
+
+						}
+					}
+					runGame();
+
+				}
+				else{
+					var buttons = GamePad.GetData (0);
+						
+					//DEBUGGING PURPOSES			
+					if (buttons.Buttons != 0) {
+						if ((buttons.Buttons & GamePadButtons.Start) != 0) 
+						{
+							gamePause = false;
+
+						}
+					}
+				}
 				Director.Instance.Render ();
 				//UISystem.Render ();			
 				Director.Instance.GL.Context.SwapBuffers ();
 				Director.Instance.PostSwap ();
+
 			}
 			Director.Terminate();
 		}
