@@ -22,8 +22,6 @@ namespace Bullets
 		public Player (Scene scene)
 		{
 			textureInfo = new TextureInfo("/Application/textures/player.png");
-			
-			sprite			= new SpriteUV();
 			sprite			= new SpriteUV(textureInfo);
 			sprite.Quad.S	= textureInfo.TextureSizef;
 			sprite.Position = new Vector2(50.0f,Director.Instance.GL.Context.GetViewport().Height*0.5f);
@@ -35,7 +33,7 @@ namespace Bullets
 			scene.AddChild(sprite);
 		}
 		
-		public static void Update()
+		public void update()
 		{
 			
 			

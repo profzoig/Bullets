@@ -13,15 +13,16 @@ namespace Bullets
 	{
 		public SpriteUV pSprite;
 		TextureInfo	pTextureInfo;
-		bool alive;
 		public Vector2 pPosition;
 		public Vector2 direction;
-		public static float pVelocity = 0.02f;
+		private bool alive = false;
+		public static float pVelocity = 0.01f;
 			
 		public Projectile (Vector2 _pPosition)
 		{
+			this.alive = true;
 			pSprite = new SpriteUV();
-			pTextureInfo = new TextureInfo("/Application/textures/player.png");
+			pTextureInfo = new TextureInfo("/Application/textures/Projectile.png");
 			pSprite			= new SpriteUV(pTextureInfo);
 			
 			pSprite.Quad.S	= pTextureInfo.TextureSizef;
@@ -32,36 +33,29 @@ namespace Bullets
 			direction= Player.sprite.Position- _pPosition;
 			direction.Normalize();
 			pSprite.Rotate(FMath.Atan2(direction.X,direction.Y));
-			
-			//scene.AddChild(pSprite);
+
 			AppMain.gameScene.AddChild(pSprite);
+		}
 			
+		public bool getAlive(){
+			return this.alive;
 		}
 		
-		public void Create()
-		{
+		
+		public void update(){
+			if(this.alive == true){		
+				this.pSprite.Position += this.direction * Projectile.pVelocity;
+		
+				// if(projectile is off screen, delete
+				if ((this.pSprite.Position.X > Director.Instance.GL.Context.GetViewport().Width - 35) || 
+					(this.pSprite.Position.X < 25) ||
+					(this.pSprite.Position.Y > Director.Instance.GL.Context.GetViewport().Height - 55) ||
+					(this.pSprite.Position.Y < 55))			
+				{
+						this.alive = false;
+						AppMain.gameScene.RemoveChild(pSprite, true);
+				}	
+			}
 		}
-		
-		public static void Update()
-		{
-			
-			     
-	    }
-		
-		public void Draw()
-		{
-		}
-		
-		public void isOffScreen()
-		{
-			
-		}
-		
-		public void Delete()
-		{
-			
-		}
-		
 	}
 }
-
