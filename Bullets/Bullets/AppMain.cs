@@ -251,27 +251,7 @@ namespace Bullets
 				}
 			}
 		}
-////		public static void TrackPlayer()
-////		{
-////			float xDiff = (Player.sprite.X + (Player.sprite.Quad.S.X/2)) - (sprite().Position.X + (player().Quad.S.X/2));			
-//		
-////			float yDiff = (sprite.Position.Y + (sprite.Quad.S.Y/2)) - (sprite().Position.Y + (sprite().Quad.S.Y/2));
-////		
-////			if(!(xDiff == 0 || yDiff == 0))
-////			{
-////				if(yDiff > 0)
-////				{					
-////					float angle = FMath.PI - FMath.Atan(xDiff/yDiff);				
-////				 	Move(-3.0f * FMath.Sin(angle), -3.0f * -FMath.Cos(angle));			
-////				}
-////				else
-////				{
-////					float angle = FMath.Atan(xDiff/-yDiff);				
-////				 	Move(-3.0f * FMath.Sin(angle), -3.0f * -FMath.Cos(angle));	
-////				}	
-////				Rotate(-xDiff, -yDiff);			
-////			}		
-////		}
+
 	}
 }
 
