@@ -52,35 +52,39 @@ namespace Bullets
 			//Game Loop
 			bool quitGame = false;
 			while (!quitGame) {		
-				Director.Instance.Update ();
-				if(gamePause == false){
+				
+					if(gamePause == false){
+										Director.Instance.Update ();
+					runGame();
 					var buttons = GamePad.GetData (0);
 						
 					//DEBUGGING PURPOSES			
-					if (buttons.Buttons != 0) {
+
 						if ((buttons.Buttons & GamePadButtons.Start) != 0) 
 						{
 							gamePause = true;
-
+						//	Scheduler.Instance.ScheduleUpdateForTarget(appMain,0,false);
 						}
-					}
-					runGame();
+					
+					
 
 				}
 				else{
 					var buttons = GamePad.GetData (0);
 						
 					//DEBUGGING PURPOSES			
-					if (buttons.Buttons != 0) {
+
 						if ((buttons.Buttons & GamePadButtons.Start) != 0) 
 						{
 							gamePause = false;
-
+							//Scheduler.Instance.ScheduleUpdateForTarget(gameScene,0,true);
 						}
-					}
-				}
+					
+			}
+
+
 				Director.Instance.Render ();
-				//UISystem.Render ();			
+				UISystem.Render ();			
 				Director.Instance.GL.Context.SwapBuffers ();
 				Director.Instance.PostSwap ();
 
@@ -227,6 +231,8 @@ namespace Bullets
 		}
 
 		public static void Update(){	
+
+			
 			//Update the player.
 			player.update();
 			
