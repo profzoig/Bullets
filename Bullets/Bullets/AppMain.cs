@@ -162,12 +162,15 @@ namespace Bullets
 			player = new Player (gameScene);				
 			enemyList = new List<Enemy>();
 			proj = new List<Projectile> ();	
+			coinCol = new List<Coin>();
 			switchGameState(GAME_STATE_NEW_LEVEL);
 		}
 		
 		public static void gameStateNewLevel(){		
+			clearLevel();
 			level++;
 			enemyList = new List<Enemy>();
+			coinCol = new List<Coin>();
 			levelEnemyAmount +=2; 
 			if (levelEnemyAmount>=9){levelEnemyAmount=9;}
 			lvlFireChance = 301 - 15*level;
@@ -181,7 +184,29 @@ namespace Bullets
 			
 			//Include level knob lol ---> Actually means the kinda difficulty level increase shizz bruh
 			spawnWave();
+			spawnCoins();
 			switchGameState(GAME_STATE_PLAY_GAME);
+		}
+		
+		public static void clearLevel(){
+			for(int i = 0; i < enemyList.Count; i++){
+				enemyList[i].removeSprite();
+			}
+			for(int i = 0; i < coinCol.Count; i++){
+				coinCol[i].removeSprite();	
+			}
+		}
+		
+		public static void spawnCoins(){
+			Random r = new Random();
+			int coinAmount = r.Next(5, 30);
+			Console.WriteLine(coinAmount);
+			
+			for (int i = 0; i< coinAmount; i++)
+			{
+				Console.WriteLine(i);
+				coinCol.Add(new Coin());
+			}			
 		}
 		
 		public static void spawnWave(){
@@ -265,12 +290,26 @@ namespace Bullets
 
 				}
 			}
+
 		}
 
 	}
 }
 
-
+//			else	
+//			{
+//				//Update Blips
+//				for (int j = 0; j<coinCol.Count; j++)
+//				{
+//					coinCol[j].Update();
+//					if(coinCol[j].getAlive() == false)
+//					{
+//						coinCol.RemoveAt(j);
+//						//increment score
+//						score++;
+//					}
+//				}
+//			}
 
 //COLLISION CODE
 //min.X  = sprite.Position.X;

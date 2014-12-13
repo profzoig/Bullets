@@ -42,6 +42,10 @@ namespace Bullets
 			//Add to the current scene.
 			AppMain.gameScene.AddChild(sprite);
 		}
+		
+		public void removeSprite(){
+			AppMain.gameScene.RemoveChild(sprite, true);		
+		}
 
 		public void update()
 		{
@@ -54,7 +58,6 @@ namespace Bullets
 			if(isAlive == true){
 				int c = r.Next(0, AppMain.lvlFireChance);
 				//chance = c*AppMain.lvlFireChance;
-				Console.WriteLine(chance);
 				if (c/100 < percentFire) {
 					fire();			
 				}		
