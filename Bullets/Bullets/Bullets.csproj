@@ -45,6 +45,7 @@
     <Compile Include="Background.cs" />
     <Compile Include="Enemy.cs" />
     <Compile Include="Projectile.cs" />
+    <Compile Include="Coin.cs" />
   </ItemGroup>
   <ItemGroup>
     <ShaderProgram Include="shaders\Simple.fcg" />

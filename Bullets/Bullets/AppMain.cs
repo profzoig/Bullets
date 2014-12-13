@@ -24,11 +24,13 @@ namespace Bullets
 		private static Background background;
 		public static List<Projectile> proj;
 		public static List<Enemy> enemyList;
+		public static List<Coin> coinCol;
 		
 		public static int score;
 		public static int level; 
 		public static int levelEnemyAmount;
 		public static bool gamePause;
+		
 		//Game states which make up the game engine
 		private const int GAME_STATE_TITLE = 10;
 		private const int  GAME_STATE_MENU = 20;
@@ -268,3 +270,16 @@ namespace Bullets
 	}
 }
 
+
+
+//COLLISION CODE
+//min.X  = sprite.Position.X;
+//   min.Y  = sprite.Position.Y;
+//   max.X  = sprite.Position.X + (textureInfo.TextureSizef.X);
+//   max.Y  = sprite.Position.Y + (textureInfo.TextureSizef.Y);
+//   box.Min  = min;   
+//   box.Max  = max;
+//
+////then you just pass the box to main 
+//	
+//	if(box.Ovelaps(otherbox))
