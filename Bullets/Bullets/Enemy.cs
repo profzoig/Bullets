@@ -15,6 +15,7 @@ namespace Bullets
 		private static TextureInfo textureInfo;
 		private static bool alive;
 		public int rotation;
+		public Vector2 direction;
 		
 		public bool Alive {get{return alive;} set{alive = value;}}
 		
@@ -33,7 +34,10 @@ namespace Bullets
 
 		public void update()
 		{
+			direction= Player.sprite.Position- sprite.Position;
+			direction.Normalize();
 			
+			sprite.Angle=FMath.Atan2(direction.X,-direction.Y) -90;
 		}
 	}
 }
