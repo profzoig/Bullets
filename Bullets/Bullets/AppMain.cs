@@ -39,6 +39,10 @@ namespace Bullets
 		private const int  GAME_STATE_PLAYER_DIE = 70;
 		private const int  GAME_STATE_GAME_OVER = 80;
 		
+		public static float lvlProjSpeed = 0.02f;
+		public static double lvlProjectileFrameDelay = 25;
+	 	public static int lvlFireChance = 301;
+		
 		public static int currentGameState = 0;
 		//Possible future implementation
 		//private static Powerup 		powerup;
@@ -162,8 +166,17 @@ namespace Bullets
 		public static void gameStateNewLevel(){		
 			level++;
 			enemyList = new List<Enemy>();
-			levelEnemyAmount += 4 + level; 
+			levelEnemyAmount +=2; 
 			if (levelEnemyAmount>=9){levelEnemyAmount=9;}
+			lvlFireChance = 301 - 15*level;
+			if(lvlFireChance >= 151){lvlFireChance = 151;}
+
+			lvlProjectileFrameDelay = 50 - 4*level;
+			if (lvlProjectileFrameDelay<=15) {lvlProjectileFrameDelay=15;}
+	
+		//	lvlProjSpeed=3+.5*level;
+			//if(lvlProjSpeed > 8){lvlProjSpeed = 8;}	
+			
 			//Include level knob lol ---> Actually means the kinda difficulty level increase shizz bruh
 			spawnWave();
 			switchGameState(GAME_STATE_PLAY_GAME);
@@ -223,7 +236,7 @@ namespace Bullets
 				{								
 					//Vector2 testPos = new Vector2(500f, Director.Instance.GL.Context.GetViewport().Height*0.5f);
 					//testProjectile = new Projectile(testPos);
-					proj.Add(new Projectile(enemyList[0].sprite.Position));
+					//proj.Add(new Projectile(enemyList[0].sprite.Position));
 				}
 			}
 			//END

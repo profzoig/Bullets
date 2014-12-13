@@ -16,7 +16,7 @@ namespace Bullets
 		public Vector2 pPosition;
 		public Vector2 direction;
 		private bool alive = false;
-		public static float pVelocity = 0.01f;
+		public static float pVelocity = AppMain.lvlProjSpeed;//0.01f;
 			
 		public Projectile (Vector2 _pPosition)
 		{
@@ -31,7 +31,7 @@ namespace Bullets
 			
 			//travel in the direction of the player WHEN THE BULLET WAS FIRST FIRED
 			direction= Player.sprite.Position- _pPosition;
-			direction.Normalize();
+			//direction.Normalize();
 			pSprite.Rotate(FMath.Atan2(direction.X,direction.Y));
 
 			AppMain.gameScene.AddChild(pSprite);
