@@ -22,7 +22,7 @@ namespace Bullets
 		{
 			this.alive = true;
 			pSprite = new SpriteUV();
-			pTextureInfo = new TextureInfo("/Application/textures/player.png");
+			pTextureInfo = new TextureInfo("/Application/textures/bullet.png");
 			pSprite			= new SpriteUV(pTextureInfo);
 			
 			pSprite.Quad.S	= pTextureInfo.TextureSizef;
