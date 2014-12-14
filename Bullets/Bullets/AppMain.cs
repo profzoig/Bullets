@@ -17,7 +17,7 @@ namespace Bullets
 	{
 		public static Sce.PlayStation.HighLevel.GameEngine2D.Scene gameScene;
 		private static Sce.PlayStation.HighLevel.UI.Scene uiScene;
-		private static Sce.PlayStation.HighLevel.UI.Label startLabel;
+		
 				
 		public static Player player;
 		public static Enemy enemy;
@@ -41,6 +41,13 @@ namespace Bullets
 		private const int  GAME_STATE_PLAYER_DIE = 70;
 		private const int  GAME_STATE_GAME_OVER = 80;
 		
+		//Start/Gameover Sprites
+		public static SpriteUV		startSprite;
+		private static TextureInfo	starttextureInfo;
+		
+		public static SpriteUV		gameOverSprite;
+		private static TextureInfo	gameOvertextureInfo;
+		
 		public static float lvlProjSpeed = 0.02f;
 		public static double lvlProjectileFrameDelay = 25;
 	 	public static int lvlFireChance = 301;
@@ -48,8 +55,7 @@ namespace Bullets
 		public static int currentGameState = 0;
 		
 		
-		//Possible future implementation
-		//private static Powerup 		powerup;
+
 			
 		public static void Main (string[] args)
 		{
@@ -97,41 +103,48 @@ namespace Bullets
 		}
 		
 		public static void gameStateTitle(){
+
+			starttextureInfo = new TextureInfo("/Application/textures/startsprite.png");
+			startSprite			= new SpriteUV(starttextureInfo);
+			startSprite.Quad.S	= starttextureInfo.TextureSizef;
+			startSprite.Position = new Vector2(Director.Instance.GL.Context.GetViewport().Width*0.4f,Director.Instance.GL.Context.GetViewport().Height*0.5f);
+			gameScene.AddChild(startSprite);
+			//gameScene.RemoveChild(startSprite, true);
 			
+			switchGameState(GAME_STATE_MENU);
 			
-			
-			Image img = new Image(ImageMode.Rgba, new ImageSize(width,height),
-                         new ImageColor(255,0,0,0));
-   img.DrawText("Hello World", 
-                new ImageColor(255,0,0,255),
-                new Font(FontAlias.System,170,FontStyle.Regular),
-                new ImagePosition(0,150));
-  
-   Texture2D texture = new Texture2D(width,height,false,
-                                     PixelFormat.Rgba);
-   texture.SetPixels(0,img.ToBuffer());
-   img.Dispose(); 
-			
-//			Panel startPanel = new Panel();
-//			startPanel.SetPosition(Director.Instance.GL.Context.GetViewport().Width/2 - startLabel.Width/2,
-//			Director.Instance.GL.Context.GetViewport().Height/2);
-			startLabel = new Sce.PlayStation.HighLevel.UI.Label();
-			startLabel.HorizontalAlignment = HorizontalAlignment.Center;
-			startLabel.VerticalAlignment = VerticalAlignment.Middle;
-			startLabel.SetPosition(
-			Director.Instance.GL.Context.GetViewport().Width/2 - startLabel.Width/2,
-			Director.Instance.GL.Context.GetViewport().Height/2);
-			startLabel.Text = "Touch to Start!";
-			startPanel.AddChildLast(startLabel);
-//			switchGameState(GAME_STATE_MENU);
 		}
 
+
 		public static void gameStateMenu(){
+		
+			var buttons = GamePad.GetData (0);
+				
+			if (buttons.Buttons != 0) {
+				if ((buttons.Buttons & GamePadButtons.Cross) != 0) 
+				{
+			Console.WriteLine ("DONE");
+			switchGameState(GAME_STATE_NEW_GAME);
+				}
 			
+		}
 			
 		}
 		public static void gameStateHTP(){}
-		public static void gameStateGameOver(){}
+		public static void gameStateGameOver(){
+			
+			gameOvertextureInfo = new TextureInfo("/Application/textures/gameoversprite.png");
+			gameOverSprite			= new SpriteUV(gameOvertextureInfo);
+			gameOverSprite.Quad.S	= gameOvertextureInfo.TextureSizef;
+			gameOverSprite.Position = new Vector2(Director.Instance.GL.Context.GetViewport().Width*0.4f,Director.Instance.GL.Context.GetViewport().Height*0.5f);
+			gameScene.AddChild(gameOverSprite);
+			
+			
+			switchGameState(GAME_STATE_MENU);
+			
+			
+			
+		}
 		
 		public static void runGame(){
 			switch(currentGameState){	
@@ -178,6 +191,7 @@ namespace Bullets
 		public static void gameStateNewGame(){
 			level = 0;
 			score = 0;
+			levelEnemyAmount = 0;
 			//Create background
 			background = new Background (gameScene);			
 			//Set the ui Scene
@@ -237,13 +251,13 @@ namespace Bullets
 				else if(i == 1){
 					pos = new Vector2(100.0f, Director.Instance.GL.Context.GetViewport().Height*0.5f);
 				}
-				else if(i == 2){pos = new Vector2(900.0f, Director.Instance.GL.Context.GetViewport().Height*0.5f);}
-				//else if(i == 3){pos = new Vector2(900.0f, Director.Instance.GL.Context.GetViewport().Height*0.5f);}
-				//else if(i == 4){pos = new Vector2(900.0f, Director.Instance.GL.Context.GetViewport().Height*0.5f);}
-				//else if(i == 5){pos = new Vector2(900.0f, Director.Instance.GL.Context.GetViewport().Height*0.5f);}
-				//else if(i == 6){pos = new Vector2(900.0f, Director.Instance.GL.Context.GetViewport().Height*0.5f);}
-				//else if(i == 7){pos = new Vector2(900.0f, Director.Instance.GL.Context.GetViewport().Height*0.5f);}
-				//else if(i == 8){pos = new Vector2(900.0f, Director.Instance.GL.Context.GetViewport().Height*0.5f);}
+				else if(i == 2){pos = new Vector2(800.0f, Director.Instance.GL.Context.GetViewport().Height*0.5f);}
+				else if(i == 3){pos = new Vector2(200.0f, Director.Instance.GL.Context.GetViewport().Height*0.5f);}
+				else if(i == 4){pos = new Vector2(600.0f, Director.Instance.GL.Context.GetViewport().Height*0.4f);}
+				else if(i == 5){pos = new Vector2(400.0f, Director.Instance.GL.Context.GetViewport().Height*0.4f);}
+				else if(i == 6){pos = new Vector2(600.0f, Director.Instance.GL.Context.GetViewport().Height*0.6f);}
+				else if(i == 7){pos = new Vector2(400.0f, Director.Instance.GL.Context.GetViewport().Height*0.6f);}
+				else if(i == 8){pos = new Vector2(500.0f, Director.Instance.GL.Context.GetViewport().Height*0.5f);}
 				enemyList.Add(new Enemy(pos));
 			}
 		}

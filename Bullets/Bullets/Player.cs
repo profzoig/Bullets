@@ -41,7 +41,7 @@ namespace Bullets
 		}
 
 		public void collide(){
-			//AppMain.switchGameState(80);	
+			AppMain.switchGameState(80);	
 		}
 
 		public SpriteUV getSprite(){
