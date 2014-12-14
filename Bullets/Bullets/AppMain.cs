@@ -101,7 +101,6 @@ namespace Bullets
 		public static void gameStateTitle(){}
 		public static void gameStateMenu(){}
 		public static void gameStateHTP(){}
-		public static void gameStatePlayerDie(){}
 		public static void gameStateGameOver(){}
 		
 		public static void runGame(){
@@ -124,9 +123,6 @@ namespace Bullets
 				case GAME_STATE_PLAY_GAME:
 					gameStatePlayGame();
 					break;		
-				case GAME_STATE_PLAYER_DIE:
-					gameStatePlayerDie();
-					break;
 				case GAME_STATE_GAME_OVER:
 					gameStateGameOver();
 					break;
@@ -233,20 +229,64 @@ namespace Bullets
 		}
 		
 		public static void checkForCollisions(){
-				//enemyProjectile Check
-				Bounds2 b1;
-				Bounds2 b2;
-				for(var i = 0; i < coinCol.Count; i++){
-					if(coinCol[i].getAlive() == true){
-						b1 = player.getBoundingBox();
-						b2 = coinCol[i].getBoundingBox();
-						bool b = b1.Overlaps(b2);
-						if(b == true){						
-							coinCol[i].collide();
-						}
+			coinHitDetection();
+			projectileHitDetection();
+			enemyHitDetection();
+		}
+		
+		public static void projectileHitDetection(){
+			//enemyProjectile Check
+			
+			Bounds2 b1;
+			Bounds2 b2;
+			for(var i = 0; i < proj.Count; i++){
+				if(proj[i].getAlive() == true){
+					b1 = player.getBoundingBox();
+					b2 = proj[i].getBoundingBox();
+					bool b = b1.Overlaps(b2);
+					if(b == true){						
+						proj[i].collide();
+						player.collide ();
 					}
 				}
+			}
 		}
+		
+		public static void coinHitDetection(){
+			//coin Check
+			
+			Bounds2 b1;
+			Bounds2 b2;
+			for(var i = 0; i < coinCol.Count; i++){
+				if(coinCol[i].getAlive() == true){
+					b1 = player.getBoundingBox();
+					b2 = coinCol[i].getBoundingBox();
+					bool b = b1.Overlaps(b2);
+					if(b == true){						
+						coinCol[i].collide();
+					}
+				}
+			}
+		}
+		
+		public static void enemyHitDetection(){
+			//enemyProjectile Check			
+			Bounds2 b1;
+			Bounds2 b2;
+			for(var i = 0; i < enemyList.Count; i++){
+				if(enemyList[i].getAlive() == true){
+					b1 = player.getBoundingBox();
+					b2 = enemyList[i].getBoundingBox();
+					bool b = b1.Overlaps(b2);
+					if(b == true){						
+						player.collide();
+					}
+				}
+			}
+		}
+		
+		
+
 
 		public static void checkKeys(){
 			//Determine whether the player tapped the screen
@@ -301,30 +341,3 @@ namespace Bullets
 
 	}
 }
-
-//			else	
-//			{
-//				//Update Blips
-//				for (int j = 0; j<coinCol.Count; j++)
-//				{
-//					coinCol[j].Update();
-//					if(coinCol[j].getAlive() == false)
-//					{
-//						coinCol.RemoveAt(j);
-//						//increment score
-//						score++;
-//					}
-//				}
-//			}
-
-//COLLISION CODE
-//min.X  = sprite.Position.X;
-//   min.Y  = sprite.Position.Y;
-//   max.X  = sprite.Position.X + (textureInfo.TextureSizef.X);
-//   max.Y  = sprite.Position.Y + (textureInfo.TextureSizef.Y);
-//   box.Min  = min;   
-//   box.Max  = max;
-//
-////then you just pass the box to main 
-//	
-//	if(box.Ovelaps(otherbox))

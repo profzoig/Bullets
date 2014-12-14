@@ -14,7 +14,6 @@ namespace Bullets
 		//Private variables
 		public static SpriteUV		sprite;
 		private static TextureInfo	textureInfo;
-		private bool 		alive;
 		private Vector2 min, max;
 		private Bounds2 box;
 		
@@ -28,23 +27,23 @@ namespace Bullets
 			return box;
 		}
 		
-		public bool Alive { get{return alive;} set{alive = value;} }
-		
 		//Public functions
 		public Player (Scene scene)
 		{
 			textureInfo = new TextureInfo("/Application/textures/player.png");
 			sprite			= new SpriteUV(textureInfo);
 			sprite.Quad.S	= textureInfo.TextureSizef;
-			sprite.Position = new Vector2(50.0f,Director.Instance.GL.Context.GetViewport().Height*0.5f);
+			sprite.Position = new Vector2(Director.Instance.GL.Context.GetViewport().Width*0.5f,Director.Instance.GL.Context.GetViewport().Height*0.5f);
 //			sprite.Scale = new Vector2(Director.Instance.GL.Context.Screen.Width,
-//                                       Director.Instance.GL.Context.Screen.Height);
-
-			
+//                                       Director.Instance.GL.Context.Screen.Height);			
 			//Add to the current scene.
 			scene.AddChild(sprite);
 		}
-		
+
+		public void collide(){
+			//AppMain.switchGameState(80);	
+		}
+
 		public SpriteUV getSprite(){
 			return sprite;	
 		}

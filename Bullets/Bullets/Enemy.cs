@@ -20,10 +20,11 @@ namespace Bullets
 		private double chance;	
 		private double percentFire;	
 		private double projFrameDelay;
-		public bool Alive {get{return isAlive;} set{isAlive = value;}}
 		public static int keyDDD = 0;
 		public int val;
 		private static Random r = new Random();
+		private Vector2 min, max;
+		private Bounds2 box;
 		
 		public Enemy (Vector2 pos, Vector2 rot)
 		{
@@ -41,6 +42,18 @@ namespace Bullets
 			projFrameDelay = AppMain.lvlProjectileFrameDelay;
 			//Add to the current scene.
 			AppMain.gameScene.AddChild(sprite);
+		}
+		
+		public bool getAlive() {return isAlive;}
+						
+		public Bounds2 getBoundingBox(){
+			min.X  = sprite.Position.X;
+		    min.Y  = sprite.Position.Y;
+			max.X  = sprite.Position.X + (textureInfo.TextureSizef.X);
+			max.Y  = sprite.Position.Y + (textureInfo.TextureSizef.Y);
+		    box.Min  = min;   
+			box.Max  = max;			
+			return box;
 		}
 		
 		public void removeSprite(){

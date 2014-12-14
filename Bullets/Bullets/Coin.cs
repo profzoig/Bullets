@@ -42,7 +42,8 @@ namespace Bullets
 			max.X  = sprite.Position.X + (textureInfo.TextureSizef.X);
 			max.Y  = sprite.Position.Y + (textureInfo.TextureSizef.Y);
 		    box.Min  = min;   
-			box.Max  = max;			
+			box.Max  = max;
+			
 			return box;
 		}
 		
