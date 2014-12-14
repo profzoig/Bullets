@@ -17,6 +17,7 @@ namespace Bullets
 	{
 		public static Sce.PlayStation.HighLevel.GameEngine2D.Scene gameScene;
 		private static Sce.PlayStation.HighLevel.UI.Scene uiScene;
+		private static Sce.PlayStation.HighLevel.UI.Label				scoreLabel;
 		
 				
 		public static Player player;
@@ -181,6 +182,22 @@ namespace Bullets
 			//Set game scene
 			gameScene = new Sce.PlayStation.HighLevel.GameEngine2D.Scene ();
 			gameScene.Camera.SetViewFromViewport ();
+			
+						//Set the ui scene.
+			uiScene = new Sce.PlayStation.HighLevel.UI.Scene();
+			Panel panel  = new Panel();
+			panel.Width  = Director.Instance.GL.Context.GetViewport().Width;
+			panel.Height = Director.Instance.GL.Context.GetViewport().Height;
+			scoreLabel = new Sce.PlayStation.HighLevel.UI.Label();
+			scoreLabel.HorizontalAlignment = HorizontalAlignment.Center;
+			scoreLabel.VerticalAlignment = VerticalAlignment.Top;
+			scoreLabel.SetPosition(
+				Director.Instance.GL.Context.GetViewport().Width/2 - scoreLabel.Width/2,
+				Director.Instance.GL.Context.GetViewport().Height*0.05f - scoreLabel.Height/2);
+			scoreLabel.Text = "Score: " + score;
+			panel.AddChildLast(scoreLabel);
+			uiScene.RootWidget.AddChildLast(panel);
+			UISystem.SetScene(uiScene);
 
 //			Vector2 testPos = new Vector2(500f, Director.Instance.GL.Context.GetViewport().Height*0.5f);
 //			testProjectile = new Projectile(gameScene, testPos);			
@@ -341,7 +358,7 @@ namespace Bullets
 		public static void checkKeys(){
 			//Determine whether the player tapped the screen
 			var touches = Touch.GetData (0);
-			
+			scoreLabel.Text = "Score: " + score;scoreLabel.Text = "Score: " + score;
 			//If tapped, inform the player.
 			if (touches.Count > 0) 
 			{
