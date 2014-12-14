@@ -9,15 +9,21 @@ namespace Bullets
 {
 	public class Coin
 	{
-		public static SpriteUV		sprite;
+		public SpriteUV	sprite;
 		private static TextureInfo	textureInfo;
-		public bool 		alive;
+		public bool isAlive = false;
 		public Bounds2 bounds;
 		public Rectangle boundsRect;
+		public bool isColliding = false;
 		public static Random random = new Random();
+		private Vector2 min, max;
+		private Bounds2 box;
+		
+		
 		//Public functions
 		public Coin ()
 		{
+			this.isAlive = true;
 			textureInfo = new TextureInfo("/Application/textures/blip.png");
 			sprite			= new SpriteUV(textureInfo);
 			sprite.Quad.S	= textureInfo.TextureSizef;
@@ -26,16 +32,35 @@ namespace Bullets
 			int randomNumberY = random.Next(43, 498);
 			Vector2 randomLocation = new Vector2(randomNumberX,randomNumberY);
 			sprite.Position = randomLocation;
-			boundsRect = new Rectangle(sprite.Position.X, sprite.Position.Y, textureInfo.Texture.Width, textureInfo.Texture.Height);
 			//Add to the current scene.
 			AppMain.gameScene.AddChild(sprite);
 		}
+		
+		public Bounds2 getBoundingBox(){
+			min.X  = sprite.Position.X;
+		    min.Y  = sprite.Position.Y;
+			max.X  = sprite.Position.X + (textureInfo.TextureSizef.X);
+			max.Y  = sprite.Position.Y + (textureInfo.TextureSizef.Y);
+		    box.Min  = min;   
+			box.Max  = max;			
+			return box;
+		}
+		
 		public bool getAlive(){
-			return this.alive;
+			return this.isAlive;
 		}
 		
 		public void removeSprite(){
 			AppMain.gameScene.RemoveChild(sprite, true);		
+		}
+		
+		public void collide(){
+			if(isColliding == false){
+				AppMain.score++;
+				this.isColliding = true;
+				this.isAlive = false;
+				removeSprite();
+			}
 		}
 		
 		public void Update()

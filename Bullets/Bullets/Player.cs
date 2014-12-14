@@ -14,7 +14,19 @@ namespace Bullets
 		//Private variables
 		public static SpriteUV		sprite;
 		private static TextureInfo	textureInfo;
-		private static bool 		alive;
+		private bool 		alive;
+		private Vector2 min, max;
+		private Bounds2 box;
+		
+		public Bounds2 getBoundingBox(){
+			min.X  = sprite.Position.X;
+		    min.Y  = sprite.Position.Y;
+			max.X  = sprite.Position.X + (textureInfo.TextureSizef.X);
+			max.Y  = sprite.Position.Y + (textureInfo.TextureSizef.Y);
+		    box.Min  = min;   
+			box.Max  = max;
+			return box;
+		}
 		
 		public bool Alive { get{return alive;} set{alive = value;} }
 		
@@ -31,6 +43,10 @@ namespace Bullets
 			
 			//Add to the current scene.
 			scene.AddChild(sprite);
+		}
+		
+		public SpriteUV getSprite(){
+			return sprite;	
 		}
 		
 		public void update()

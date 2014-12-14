@@ -139,14 +139,12 @@ namespace Bullets
 			//Set up director and UISystem
 			Director.Initialize ();
 			UISystem.Initialize (Director.Instance.GL.Context);
-			
 			//Set game scene
 			gameScene = new Sce.PlayStation.HighLevel.GameEngine2D.Scene ();
 			gameScene.Camera.SetViewFromViewport ();
 
 //			Vector2 testPos = new Vector2(500f, Director.Instance.GL.Context.GetViewport().Height*0.5f);
-//			testProjectile = new Projectile(gameScene, testPos);
-			
+//			testProjectile = new Projectile(gameScene, testPos);			
 			//Run the scene.
 			Director.Instance.RunWithScene (gameScene, true);
 		}
@@ -189,12 +187,8 @@ namespace Bullets
 		}
 		
 		public static void clearLevel(){
-			for(int i = 0; i < enemyList.Count; i++){
-				enemyList[i].removeSprite();
-			}
-			for(int i = 0; i < coinCol.Count; i++){
-				coinCol[i].removeSprite();	
-			}
+			for(int i = 0; i < enemyList.Count; i++){enemyList[i].removeSprite();}
+			for(int i = 0; i < coinCol.Count; i++){coinCol[i].removeSprite();}
 		}
 		
 		public static void spawnCoins(){
@@ -202,11 +196,7 @@ namespace Bullets
 			int coinAmount = r.Next(5, 30);
 			Console.WriteLine(coinAmount);
 			
-			for (int i = 0; i< coinAmount; i++)
-			{
-				Console.WriteLine(i);
-				coinCol.Add(new Coin());
-			}			
+			for (int i = 0; i< coinAmount; i++){coinCol.Add(new Coin());}			
 		}
 		
 		public static void spawnWave(){
@@ -237,11 +227,27 @@ namespace Bullets
 		public static void gameStatePlayGame(){
 			//checkAmmo();
 			checkKeys();
-			//checkForCollisions();
+			checkForCollisions();
 			Update();	
 			//checkForEndOfLevel();	
 		}
 		
+		public static void checkForCollisions(){
+				//enemyProjectile Check
+				Bounds2 b1;
+				Bounds2 b2;
+				for(var i = 0; i < coinCol.Count; i++){
+					if(coinCol[i].getAlive() == true){
+						b1 = player.getBoundingBox();
+						b2 = coinCol[i].getBoundingBox();
+						bool b = b1.Overlaps(b2);
+						if(b == true){						
+							coinCol[i].collide();
+						}
+					}
+				}
+		}
+
 		public static void checkKeys(){
 			//Determine whether the player tapped the screen
 			var touches = Touch.GetData (0);
