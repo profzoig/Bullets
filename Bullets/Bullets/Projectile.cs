@@ -16,7 +16,7 @@ namespace Bullets
 		public Vector2 pPosition;
 		public Vector2 direction;
 		private bool isAlive = false;
-		public static float pVelocity = AppMain.lvlProjSpeed;//0.01f;
+		public static float pVelocity = AppMain.lvlProjSpeed;
 		private Vector2 min, max;
 		private Bounds2 box;
 		private bool isColliding = false;
@@ -30,11 +30,9 @@ namespace Bullets
 			this.isColliding = false;
 			sprite.Quad.S	= textureInfo.TextureSizef;
 			sprite.Position =_pPosition;
-			//sprite.Scale = new Vector2(Director.Instance.GL.Context.Screen.Width, Director.Instance.GL.Context.Screen.Height);
-			
+		
 			//travel in the direction of the player WHEN THE BULLET WAS FIRST FIRED
 			direction= Player.sprite.Position- _pPosition;
-			//direction.Normalize();
 			sprite.Rotate(FMath.Atan2(direction.X,direction.Y));
 
 			AppMain.gameScene.AddChild(sprite);

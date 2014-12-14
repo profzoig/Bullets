@@ -63,12 +63,7 @@ namespace Bullets
 				removeSprite();
 			}
 		}
-		
-		public void Update()
-		{
 
-			
-		}
 	}
 }
 

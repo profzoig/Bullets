@@ -34,8 +34,7 @@ namespace Bullets
 			sprite			= new SpriteUV(textureInfo);
 			sprite.Quad.S	= textureInfo.TextureSizef;
 			sprite.Position = new Vector2(Director.Instance.GL.Context.GetViewport().Width*0.5f,Director.Instance.GL.Context.GetViewport().Height*0.5f);
-//			sprite.Scale = new Vector2(Director.Instance.GL.Context.Screen.Width,
-//                                       Director.Instance.GL.Context.Screen.Height);			
+	
 			//Add to the current scene.
 			scene.AddChild(sprite);
 		}
@@ -48,11 +47,6 @@ namespace Bullets
 			return sprite;	
 		}
 		
-		public void update()
-		{
-			
-			
-		}
 	}
 }
 

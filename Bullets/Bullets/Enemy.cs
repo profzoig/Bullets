@@ -33,8 +33,7 @@ namespace Bullets
 			sprite			= new SpriteUV(textureInfo);
 			sprite.Quad.S	= textureInfo.TextureSizef;
 			isAlive = true;
-			sprite.Position = pos;//new Vector2(900.0f,Director.Instance.GL.Context.GetViewport().Height*0.5f);
-			//sprite.Rotate(rot);//sprite.Rotate = new Vector2(180.0f);
+			sprite.Position = pos;
 			projectileFrameCount = 0;
 			
 			percentFire = 0.001;
@@ -69,7 +68,6 @@ namespace Bullets
 			//Enemy has a chance to shoot every movement
 			if(isAlive == true){
 				int c = r.Next(0, AppMain.lvlFireChance);
-				//chance = c*AppMain.lvlFireChance;
 				if (c/100 < percentFire) {
 					fire();			
 				}		
