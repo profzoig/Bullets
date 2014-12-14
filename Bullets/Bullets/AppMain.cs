@@ -10,6 +10,7 @@ using Sce.PlayStation.HighLevel.GameEngine2D;
 using Sce.PlayStation.HighLevel.GameEngine2D.Base;
 using Sce.PlayStation.HighLevel.UI;
 
+
 namespace Bullets
 {
 	public class AppMain
@@ -18,7 +19,7 @@ namespace Bullets
 		private static Sce.PlayStation.HighLevel.UI.Scene uiScene;
 		private static Sce.PlayStation.HighLevel.UI.Label scoreLabel;
 		
-		private static Obstacle[] obstacles;
+		
 		public static Player player;
 		public static Enemy enemy;
 		private static Background background;
@@ -30,6 +31,9 @@ namespace Bullets
 		public static int level; 
 		public static int levelEnemyAmount;
 		public static bool gamePause;
+		
+		
+		
 		
 		//Game states which make up the game engine
 		private const int GAME_STATE_TITLE = 10;
@@ -46,6 +50,8 @@ namespace Bullets
 	 	public static int lvlFireChance = 301;
 		
 		public static int currentGameState = 0;
+		
+		
 		//Possible future implementation
 		//private static Powerup 		powerup;
 			
@@ -78,7 +84,7 @@ namespace Bullets
 				else{
 					var buttons = GamePad.GetData (0);
 						
-					//DEBUGGING PURPOSES			
+								
 
 						if ((buttons.Buttons & GamePadButtons.Start) != 0) 
 						{
@@ -176,7 +182,7 @@ namespace Bullets
 		//	lvlProjSpeed=3+.5*level;
 			//if(lvlProjSpeed > 8){lvlProjSpeed = 8;}	
 			
-			//Include level knob lol ---> Actually means the kinda difficulty level increase shizz bruh
+			//Include Level Changer
 			spawnWave();
 			spawnCoins();
 			switchGameState(GAME_STATE_PLAY_GAME);
@@ -209,7 +215,7 @@ namespace Bullets
 					pos = new Vector2(100.0f, Director.Instance.GL.Context.GetViewport().Height*0.5f);
 					rot = new Vector2(0);
 				}
-				//else if(i == 2){pos = new Vector2(100.0f, Director.Instance.GL.Context.GetViewport().Height*0.5f);}
+				else if(i == 2){pos = new Vector2(100.0f, Director.Instance.GL.Context.GetViewport().Height*0.5f);}
 				//else if(i == 3){pos = new Vector2(900.0f, Director.Instance.GL.Context.GetViewport().Height*0.5f);}
 				//else if(i == 4){pos = new Vector2(900.0f, Director.Instance.GL.Context.GetViewport().Height*0.5f);}
 				//else if(i == 5){pos = new Vector2(900.0f, Director.Instance.GL.Context.GetViewport().Height*0.5f);}
@@ -303,16 +309,16 @@ namespace Bullets
 			
 			var buttons = GamePad.GetData (0);
 						
-			//DEBUGGING PURPOSES			
-			if (buttons.Buttons != 0) {
-				if ((buttons.Buttons & GamePadButtons.Cross) != 0) 
-				{								
-					//Vector2 testPos = new Vector2(500f, Director.Instance.GL.Context.GetViewport().Height*0.5f);
-					//testProjectile = new Projectile(testPos);
-					//proj.Add(new Projectile(enemyList[0].sprite.Position));
-				}
-			}
-			//END
+//			//DEBUGGING PURPOSES TO MAKE THE ENEMY FIRE ON COMMAND		
+//			if (buttons.Buttons != 0) {
+//				if ((buttons.Buttons & GamePadButtons.Cross) != 0) 
+//				{								
+//					//Vector2 testPos = new Vector2(500f, Director.Instance.GL.Context.GetViewport().Height*0.5f);
+//					//testProjectile = new Projectile(testPos);
+//					//proj.Add(new Projectile(enemyList[0].sprite.Position));
+//				}
+//			}
+//			//END
 				
 		}
 
@@ -333,6 +339,16 @@ namespace Bullets
 				proj[i].update();
 				if(proj[i].getAlive() == false){
 					proj.RemoveAt(i);
+					
+					
+					
+scoreLabel.HorizontalAlignment = HorizontalAlignment.Center;
+scoreLabel.VerticalAlignment = VerticalAlignment.Middle;
+scoreLabel.SetPosition(
+Director.Instance.GL.Context.GetViewport().Width/2 - scoreLabel.Width/2,
+Director.Instance.GL.Context.GetViewport().Height/2);
+scoreLabel.Text = score;
+panel.AddChildLast(scoretLabel);
 
 				}
 			}

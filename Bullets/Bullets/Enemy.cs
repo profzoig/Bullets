@@ -14,10 +14,9 @@ namespace Bullets
 		public SpriteUV	sprite;
 		private static TextureInfo textureInfo;
 		private bool isAlive = false;
-		private int rotation;
 		private Vector2 direction;
 		private int projectileFrameCount;	
-		private double chance;	
+			
 		private double percentFire;	
 		private double projFrameDelay;
 		public static int keyDDD = 0;
@@ -37,7 +36,7 @@ namespace Bullets
 			sprite.Position = pos;//new Vector2(900.0f,Director.Instance.GL.Context.GetViewport().Height*0.5f);
 			//sprite.Rotate(rot);//sprite.Rotate = new Vector2(180.0f);
 			projectileFrameCount = 0;
-			chance = 0;
+			
 			percentFire = 0.001;
 			projFrameDelay = AppMain.lvlProjectileFrameDelay;
 			//Add to the current scene.
