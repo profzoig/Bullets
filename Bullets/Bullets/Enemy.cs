@@ -25,7 +25,7 @@ namespace Bullets
 		private Vector2 min, max;
 		private Bounds2 box;
 		
-		public Enemy (Vector2 pos, Vector2 rot)
+		public Enemy (Vector2 pos)
 		{
 			val = keyDDD;
 			keyDDD++;

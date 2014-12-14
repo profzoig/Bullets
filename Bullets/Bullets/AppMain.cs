@@ -17,9 +17,8 @@ namespace Bullets
 	{
 		public static Sce.PlayStation.HighLevel.GameEngine2D.Scene gameScene;
 		private static Sce.PlayStation.HighLevel.UI.Scene uiScene;
-		private static Sce.PlayStation.HighLevel.UI.Label scoreLabel;
-		
-		
+		private static Sce.PlayStation.HighLevel.UI.Label startLabel;
+				
 		public static Player player;
 		public static Enemy enemy;
 		private static Background background;
@@ -31,10 +30,7 @@ namespace Bullets
 		public static int level; 
 		public static int levelEnemyAmount;
 		public static bool gamePause;
-		
-		
-		
-		
+
 		//Game states which make up the game engine
 		private const int GAME_STATE_TITLE = 10;
 		private const int  GAME_STATE_MENU = 20;
@@ -59,14 +55,13 @@ namespace Bullets
 		{
 			Initialize ();
 			//Switch the game state to title
-			switchGameState(GAME_STATE_NEW_GAME);
+			switchGameState(GAME_STATE_TITLE);
 			gamePause = false;
 			//Game Loop
 			bool quitGame = false;
 			while (!quitGame) {		
-				
-					if(gamePause == false){
-										Director.Instance.Update ();
+				if(gamePause == false){
+					Director.Instance.Update ();
 					runGame();
 					var buttons = GamePad.GetData (0);
 						
@@ -77,9 +72,6 @@ namespace Bullets
 							gamePause = true;
 						//	Scheduler.Instance.ScheduleUpdateForTarget(appMain,0,false);
 						}
-					
-					
-
 				}
 				else{
 					var buttons = GamePad.GetData (0);
@@ -104,8 +96,40 @@ namespace Bullets
 			Director.Terminate();
 		}
 		
-		public static void gameStateTitle(){}
-		public static void gameStateMenu(){}
+		public static void gameStateTitle(){
+			
+			
+			
+			Image img = new Image(ImageMode.Rgba, new ImageSize(width,height),
+                         new ImageColor(255,0,0,0));
+   img.DrawText("Hello World", 
+                new ImageColor(255,0,0,255),
+                new Font(FontAlias.System,170,FontStyle.Regular),
+                new ImagePosition(0,150));
+  
+   Texture2D texture = new Texture2D(width,height,false,
+                                     PixelFormat.Rgba);
+   texture.SetPixels(0,img.ToBuffer());
+   img.Dispose(); 
+			
+//			Panel startPanel = new Panel();
+//			startPanel.SetPosition(Director.Instance.GL.Context.GetViewport().Width/2 - startLabel.Width/2,
+//			Director.Instance.GL.Context.GetViewport().Height/2);
+			startLabel = new Sce.PlayStation.HighLevel.UI.Label();
+			startLabel.HorizontalAlignment = HorizontalAlignment.Center;
+			startLabel.VerticalAlignment = VerticalAlignment.Middle;
+			startLabel.SetPosition(
+			Director.Instance.GL.Context.GetViewport().Width/2 - startLabel.Width/2,
+			Director.Instance.GL.Context.GetViewport().Height/2);
+			startLabel.Text = "Touch to Start!";
+			startPanel.AddChildLast(startLabel);
+//			switchGameState(GAME_STATE_MENU);
+		}
+
+		public static void gameStateMenu(){
+			
+			
+		}
 		public static void gameStateHTP(){}
 		public static void gameStateGameOver(){}
 		
@@ -172,12 +196,12 @@ namespace Bullets
 			enemyList = new List<Enemy>();
 			coinCol = new List<Coin>();
 			levelEnemyAmount +=2; 
-			if (levelEnemyAmount>=9){levelEnemyAmount=9;}
-			lvlFireChance = 301 - 15*level;
-			if(lvlFireChance >= 151){lvlFireChance = 151;}
+			if (levelEnemyAmount>=8){levelEnemyAmount=8;}
+			//lvlFireChance = 301 - 1*level;
+			//if(lvlFireChance >= 151){lvlFireChance = 151;}
 
-			lvlProjectileFrameDelay = 50 - 4*level;
-			if (lvlProjectileFrameDelay<=15) {lvlProjectileFrameDelay=15;}
+			//lvlProjectileFrameDelay = 25 - 1*level;
+			//if (lvlProjectileFrameDelay<=15) {lvlProjectileFrameDelay=15;}
 	
 		//	lvlProjSpeed=3+.5*level;
 			//if(lvlProjSpeed > 8){lvlProjSpeed = 8;}	
@@ -209,20 +233,18 @@ namespace Bullets
 			for(int i = 0; i < levelEnemyAmount; i++){
 				if(i == 0){
 					pos = new Vector2(900.0f, Director.Instance.GL.Context.GetViewport().Height*0.5f);
-					rot = new Vector2(0);
 				}
 				else if(i == 1){
 					pos = new Vector2(100.0f, Director.Instance.GL.Context.GetViewport().Height*0.5f);
-					rot = new Vector2(0);
 				}
-				else if(i == 2){pos = new Vector2(100.0f, Director.Instance.GL.Context.GetViewport().Height*0.5f);}
+				else if(i == 2){pos = new Vector2(900.0f, Director.Instance.GL.Context.GetViewport().Height*0.5f);}
 				//else if(i == 3){pos = new Vector2(900.0f, Director.Instance.GL.Context.GetViewport().Height*0.5f);}
 				//else if(i == 4){pos = new Vector2(900.0f, Director.Instance.GL.Context.GetViewport().Height*0.5f);}
 				//else if(i == 5){pos = new Vector2(900.0f, Director.Instance.GL.Context.GetViewport().Height*0.5f);}
 				//else if(i == 6){pos = new Vector2(900.0f, Director.Instance.GL.Context.GetViewport().Height*0.5f);}
 				//else if(i == 7){pos = new Vector2(900.0f, Director.Instance.GL.Context.GetViewport().Height*0.5f);}
 				//else if(i == 8){pos = new Vector2(900.0f, Director.Instance.GL.Context.GetViewport().Height*0.5f);}
-				enemyList.Add(new Enemy(pos, rot));
+				enemyList.Add(new Enemy(pos));
 			}
 		}
 		
@@ -231,7 +253,15 @@ namespace Bullets
 			checkKeys();
 			checkForCollisions();
 			Update();	
-			//checkForEndOfLevel();	
+			checkForEndOfLevel();	
+		}
+		
+		public static void checkForEndOfLevel(){
+			int allDead = 0;
+			for(var i = 0; i < coinCol.Count; i++){
+				if (coinCol[i].isAlive == false){allDead++;}
+			}
+			if(allDead == coinCol.Count){switchGameState(GAME_STATE_NEW_LEVEL);}
 		}
 		
 		public static void checkForCollisions(){
@@ -322,9 +352,7 @@ namespace Bullets
 				
 		}
 
-		public static void Update(){	
-
-			
+		public static void Update(){
 			//Update the player.
 			player.update();
 			
@@ -339,17 +367,6 @@ namespace Bullets
 				proj[i].update();
 				if(proj[i].getAlive() == false){
 					proj.RemoveAt(i);
-					
-					
-					
-scoreLabel.HorizontalAlignment = HorizontalAlignment.Center;
-scoreLabel.VerticalAlignment = VerticalAlignment.Middle;
-scoreLabel.SetPosition(
-Director.Instance.GL.Context.GetViewport().Width/2 - scoreLabel.Width/2,
-Director.Instance.GL.Context.GetViewport().Height/2);
-scoreLabel.Text = score;
-panel.AddChildLast(scoretLabel);
-
 				}
 			}
 
